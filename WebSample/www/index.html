@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BIM 360 Model Coordination Clash Issues</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href=/img/favicon.ico type=image/x-icon> 
+    
+    <!--  main css of this sample -->  
+    <link rel="stylesheet" href="/css/main.css" />
+
+    <!-- jquery packages --> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>   
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- bootstrap packages -->  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+     
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/> 
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+
+    <!-- jstree packages -->   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.6/jstree.min.js"></script>
+  
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.10/pako_inflate.min.js"></script> 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script> 
+
+    <!-- Autodesk Forge Viewer files -->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com//modelderivative/v2/viewers/style.min.css?v=v7.0" type="text/css" />
+    <script src="https://developer.api.autodesk.com//modelderivative/v2/viewers/viewer3D.min.js?v=v7.0"></script>
+ 
+     <script src="/libraries/bootstrap-notify.min.js"></script> 
+
+    <script src="/libraries/pb/models.min.js"></script>
+    <script src="/libraries/pb/powerbi.min.js"></script>
+    <script src="/libraries/pb/router.min.js"></script>
+
+    <script src="/libraries/MultipleModelUtil.js"></script>  
+
+     <script src="/js/utility.js"></script>  
+    <script src="/js/oauth.js"></script> 
+    <script src="/js/dm.projects.js"></script>  
+    <script src="/js/mc.clash.matrix.js"></script>  
+    <script src="/js/mc.clash.raw.js"></script>   
+    <script src="/js/mc.model.sets.js"></script>  
+    <script src="/js/powerBI.js"></script>  
+    <script src="/js/forge.viewer.js"></script>   
+    <script src="/index.js"></script>   
+
+    
+</head>
+
+<body> 
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav left">
+                <li>
+                    <a href="http://developer.autodesk.com" target="_blank">
+                      <img src="/img/bim360.png" height="30"/> 
+                       <img  src="/img/autodesk-forge.png" height="30" />
+                        <img  src="/img/pbi.png" height="30" />
+
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav center">
+                <li>
+                     <a class="navbar-brand" href="#">BIM 360 Model Coordination Clash Issues PowerBI View</a> 
+                </li>
+             </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" id="aboutHelp"><span class="glyphicon glyphicon-info-sign"></span>
+          <span id="infoText" title="About this Autodesk App">About</span></a>
+                </li>
+                <li>
+                    <a href="#" id="configHelp" onclick="$('#provisionAccountModal').modal('show');"><span class="glyphicon glyphicon-cog"></span>
+          <span id="helpButtonText" title="Info on setting up BIM credentials">Config</span></a>
+                </li>
+                <li>
+                    <a href="https://github.com/xiaodongliang/bim360-node.js-issues.api" id="github">
+                        <span id="githubText" title="jump to github">GitHub</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="signInButton"><span class="glyphicon glyphicon-user" id="signInProfileImage"></span>
+                    <span id="signInButtonText" title="Sign in with your Autodesk Account">Sign in</span></a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <!-- End of navbar --> 
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2" id="panelview"  >  
+                <div  id="projectview" class = "withborder" style="padding: 10px;">
+                    <div>
+                        <Button class="btn btn-lg btn-default button-ipad" id="iconlogin">
+                            <img src="img/autodesk_text.png" height="30px" />Sign in
+                        </Button>
+                    </div>  
+                </div> 
+                
+            </div>
+             <!-- End of left panel --> 
+            <div id="clashview" class="col-md-5 withborder">
+                 
+                 <div id="tabClash" class="tab-pane fade in active statsView"> 
+                  <div class="row"> 
+                    <div><h4 style="text-align:center">Matrix View by Object Count of Active Clash</h4></div>
+                    <div class="row modal-scrollable-table-wrapper" id="matrixView"> 
+                    <table id="tableMatrix" class="cell-border"> 
+                    </table> 
+                    </div>   
+                   <div id="pbiTitle">
+                      <h4 style="text-align:center">PowerBI Analyze by Object Category and Clash Count </h4>
+                   </div> 
+                    <div  id="pbiContainer"> 
+                    </div>  
+                   </div>
+                </div>   
+            </div> 
+
+            <div class="col-md-5 viewcolumn"> 
+                <div id="forgeViewer"></div>
+            </div>  
+        </div> 
+    </div> 
+
+    <!-- hidden DOM --> 
+    <div id="loader_stats" style="display: none;"></div>  
+    <!-- end hidden DOM --> 
+
+</body>
+
+</html>

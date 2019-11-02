@@ -1,0 +1,199 @@
+body {
+    padding-top: 3%;  
+    font-size: 14px !important;
+} 
+
+html, body {
+    height: auto;
+    overflow: hidden;
+} 
+#projectview { 
+    height: 100vh; 
+} 
+
+#hubs_list{
+    height: 40vh;
+    margin-bottom: 10px;
+    overflow:scroll;  
+    -webkit-overflow-scrolling: touch;
+}   
+#modelsetList{
+    height: 40vh;
+    margin-bottom: 10px;
+    overflow:scroll;  
+    -webkit-overflow-scrolling: touch;
+} 
+
+#clashview{
+    height: 100vh;
+    margin-bottom: 10px;
+    overflow:scroll;  
+    -webkit-overflow-scrolling: touch;
+} 
+
+.withborder {
+    border: 1px solid #c9c9c9;
+    border-left-width: 0;
+    border-bottom-width: 0;
+    border-top-width: 0; 
+}  
+
+.viewcolumn{
+    height:  92vh;;
+    width:  95%;;
+    display: block; 
+} 
+
+#matrixView { 
+    height:  150px;
+    overflow: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+} 
+#pbiContainer { 
+    height:  750px;
+}  
+
+.desktop-view iframe, .mobile-view iframe {
+    border: none;
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
+}
+.loader {
+    border: 8px solid #f3f3f3;
+    border-radius: 30%;
+    border-top: 16px solid #3498db;
+    width: 100px;
+    height: 100px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+#loader_stats {
+    position: absolute;
+    left: 59%;
+    top: 60%;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #f3f3f3;
+    border-radius: 60%;
+    border-top: 16px solid #3498db; 
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+
+  #msSpinner {
+    position: absolute;
+    left:40%;
+    top: 60%;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    margin: -30px 0 0 -30px;
+    border: 10px solid #f3f3f3;
+    border-radius: 60%;
+    border-top: 10px solid #3498db; 
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+
+  .animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+  }
+
+  .custom{
+  margin-bottom:10px;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.spacer50 {
+    height: 5vh;
+  } 
+.progress{
+    height:30px;
+}
+.boardForOption{
+    border:1px solid silver;  
+   
+}
+.withBoard{
+    border:1px solid silver;  
+    height: 35vh; 
+    border-radius:10px; 
+    margin: 2%
+ }
+#foldersTree {
+    
+    overflow: auto;
+}
+
+.bigButton30{
+    font-size: 30px;
+}
+
+.centerText{
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+ .questionmark { 
+    font-size: 25px;
+    float: right;
+    margin-right:25px;
+    margin-top: 15px;
+    cursor: pointer
+ }
+
+.form-group input[type="checkbox"] {
+    display: none;
+}
+
+.form-group input[type="checkbox"] + .btn-group > label span {
+    width: 20px;
+}
+
+.form-group input[type="checkbox"] + .btn-group > label span:first-child {
+    display: none;
+}
+.form-group input[type="checkbox"] + .btn-group > label span:last-child {
+    display: inline-block;   
+}
+
+.form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+    display: inline-block;
+}
+.form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+    display: none;   
+}
+
