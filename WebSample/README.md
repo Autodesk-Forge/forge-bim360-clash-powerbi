@@ -33,6 +33,12 @@ This repository demonstrates the scenario: analyze clash data by BIM 360 Model C
 
   <p align="center"><img src="./help/main.png" width="1000"></p>   
 
+
+## Live version
+(TO Deploy)
+Watch [this video](https://youtu.be/pQaO2Dta97g) on how to play this demo.
+
+
 ## Demonstrations
 
 ### Demo 1: Matrix View of Clash
@@ -54,10 +60,6 @@ The count in the table indicates how many objects of document (left column) have
  
    <p align="center"><img src="./help/powerbi.png" width="800"></p>  
    <p align="center"><img src="./help/export.png" width="600"></p>  
-
-## Live version
-(TO Deploy)
-Watch [this video](https://youtu.be/pQaO2Dta97g) on how to play this demo.
 
 ## Technology Architecture
 
