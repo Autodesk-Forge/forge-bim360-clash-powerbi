@@ -19,6 +19,7 @@
 'use strict';
 
 const fs = require("fs")
+const mkdir = require('mkdirp')
 const utility = require("./utility")
 
 
@@ -26,7 +27,21 @@ const mcMSServices = require('./services/mc.modelset.services')
 const mcClashServices = require('./services/mc.clash.services');
 const mcIndexServices = require('./services/mc.index.services'); 
 
-const clashDataFolder = './ClashData/'
+const clashDataFolder = './ClashData/' 
+
+var DataNameEnum = {
+  MS_VERSIONS: 'modelset-version.json',
+  CLASH_TESTS: 'clash-tests.json',
+  SCOPE_INSTANCE: 'scope-version-clash-instance.2.0.0.json.gz',
+  SCOPE_CLASH: 'scope-version-clash.2.0.0.json.gz',
+  SCOPE_DOCUMENTS: 'scope-version-document.2.0.0.json.gz',
+  CLASH_ISSUES: 'clash-issues.json',
+  DOCUMENTS_MAP:'documents-map.json',
+  INDEX_MANIFEST:'index-manifest.json',
+  INDEX_FIELDS:'index-fields.json.gz',
+  INDEX_QUERY_RESULTS:'index-query-results.json.gz'
+};
+
 if(!fs.existsSync(clashDataFolder))
   mkdir.mkdirp(clashDataFolder,(err)=>{if(!err)console.log('folder ./ClashData/ is created')})
 const statusFolder = './Status/'
@@ -52,19 +67,15 @@ async function prepareClashData(input, jobId) {
     const thisClashVersionFolder = clashDataFolder + mc_container_id + '/'+ ms_id + '/' + ms_v_id + '/'
     if (!fs.existsSync(thisClashVersionFolder)) {
       fs.mkdirSync(thisClashVersionFolder, { recursive: true });
-    } else {
-      //neccessary check if the data is latest？
-      utility.storeStatus(jobId, 'succeeded') 
-      return
-    }
+    }   
 
+    //the data will be produced if it is missing.. 
     await getModelSetVersionData(thisClashVersionFolder,input)
     await getClashData(thisClashVersionFolder,input)
-    await getIndexData(thisClashVersionFolder,input)
-    await getClashIssueData(thisClashVersionFolder,input)
-
-    buildDocsMap(mc_container_id,ms_id, ms_v_id)
-
+    await getIndexData(thisClashVersionFolder,input) 
+    await getClashIssueData(thisClashVersionFolder,input) 
+    await buildDocsMap(thisClashVersionFolder)  
+ 
     utility.storeStatus(jobId, 'succeeded')
 
   }
@@ -76,20 +87,75 @@ async function prepareClashData(input, jobId) {
 }
 
 
-async function getModelSetVersionData(thisClashVersionFolder,input){ 
-  console.log('   modelset versions: ' + thisClashVersionFolder + 'modelset-versions.json')
-  //get versions info of one specific model set 
-  const msversions = await mcMSServices.getModelSetVersion(input)
-  await utility.saveJsonObj(thisClashVersionFolder, 'modelset-version.json', msversions) 
+async function getModelSetVersionData(folder,input){ 
+
+  if(fs.existsSync(folder + DataNameEnum.MS_VERSIONS)) { 
+    //model version  info is available 
+    console.log(DataNameEnum.MS_VERSIONS + ' are available at' + folder) 
+  }else{
+      //get versions info of one specific model set 
+      const msversions = await mcMSServices.getModelSetVersion(input)
+      await utility.saveJsonObj(folder, DataNameEnum.MS_VERSIONS, msversions) 
+      console.log(DataNameEnum.MS_VERSIONS + ' downloaded at ' + folder ) 
+   } 
+} 
+
+
+async function getClashData(folder,input){ 
+   
+  if(fs.existsSync(folder + DataNameEnum.CLASH_TESTS) &&
+     fs.existsSync(folder + DataNameEnum.SCOPE_DOCUMENTS)&&  
+     fs.existsSync(folder + DataNameEnum.SCOPE_INSTANCE)&&
+     fs.existsSync(folder + DataNameEnum.SCOPE_CLASH)){
+     //all clash data are available
+     console.log('  all clash data are available at' + folder) 
+
+     return
+   }
+
+  const clashTestsRes = await mcClashServices.getClashTests(input) 
+  //one model set version with one clash test
+  const oneTest = clashTestsRes.tests.filter(function (item) {
+    return item.modelSetVersion === parseInt(input.ms_v_id);
+  })
+
+  // one clash test data
+  if (oneTest && oneTest.length > 0) {
+    
+    await utility.saveJsonObj(folder, 'clash-tests.json', oneTest) 
+    console.log(DataNameEnum.CLASH_TESTS + ' downloaded at ' + folder ) 
+
+    let testid = oneTest[0].id
+    input.testid = testid
+    let testRes = await mcClashServices.getClashTestResources(input)
+    for (let index in testRes.resources) {
+      let resurl = testRes.resources[index].url
+      let headers = testRes.resources[index].headers
+      let filename = testRes.resources[index].type + '.'+ testRes.resources[index].extension
+      let downloadRes = await utility.downloadResources(resurl, headers, folder, filename)
+      console.log(' Clash data downloaded at ' + folder ) 
+    }
+  } 
 }
 
-async function getIndexData(thisClashVersionFolder,input){ 
-  
-    //get index manifest
-    console.log('   index manifest: ' + thisClashVersionFolder + 'index-manifest.json')
-    const msVIndexManifest = await mcIndexServices.queryModelSetVersionIndexManifest(input)
-    await utility.saveJsonObj(thisClashVersionFolder, 'index-manifest.json', msVIndexManifest)
 
+
+async function getIndexData(folder,input){ 
+  
+  if(fs.existsSync(folder + DataNameEnum.INDEX_MANIFEST) &&
+     fs.existsSync(folder + DataNameEnum.INDEX_FIELDS)&&  
+     fs.existsSync(folder + DataNameEnum.INDEX_QUERY_RESULTS)){
+     //all clash data are available
+     console.log('  all index data are available at' + folder) 
+
+     return
+   }
+
+    //get index manifest
+    const msVIndexManifest = await mcIndexServices.queryModelSetVersionIndexManifest(input)
+    await utility.saveJsonObj(folder, DataNameEnum.INDEX_MANIFEST, msVIndexManifest)
+    console.log(DataNameEnum.INDEX_MANIFEST + ' downloaded at ' + folder )  
+ 
     //Index Fields 
     const msVIndexFields = await mcIndexServices.queryModelSetVersionIndexFields(input)
     let resurl = msVIndexFields.url
@@ -97,9 +163,9 @@ async function getIndexData(thisClashVersionFolder,input){
     //now it the url is signed url. not a good idea to parse it to get file name 
     //make unique name ourselves 
     //let filename = resurl.split("/").slice(-1)[0];
-    let filename =  'index-fields.json.gz'
-    let downloadRes = await utility.downloadResources(resurl, headers, thisClashVersionFolder, filename)
-    console.log('   index-fields: ' + thisClashVersionFolder + filename)
+    let filename =  DataNameEnum.INDEX_FIELDS
+    let downloadRes = await utility.downloadResources(resurl, headers, folder, filename)
+    console.log(DataNameEnum.INDEX_FIELDS + ' downloaded at ' + folder )  
 
     //Index result
     const query =
@@ -118,68 +184,46 @@ async function getIndexData(thisClashVersionFolder,input){
       headers = jobStatus.resources.results.headers
       
       //filename = jobStatus.resources.type;
-      filename = 'index-query-results.json.gz'
-      let downloadRes = await utility.downloadResources(resurl, headers, thisClashVersionFolder, filename)
-      console.log('   index-query-results: ' + thisClashVersionFolder + filename)
-    }
-
-}
-
-async function getClashData(thisClashVersionFolder,input){ 
-   
-  const clashTestsRes = await mcClashServices.getClashTests(input)
-   
-  //one model set version with one clash test
-  const oneTest = clashTestsRes.tests.filter(function (item) {
-    return item.modelSetVersion === parseInt(input.ms_v_id);
-  })
-
-  // one clash test data
-  if (oneTest && oneTest.length > 0) {
-    console.log('   clash tests : ' + thisClashVersionFolder + 'clash-tests.json')
-    await utility.saveJsonObj(thisClashVersionFolder, 'clash-tests.json', oneTest) 
-
-    let testid = oneTest[0].id
-    input.testid = testid
-    let testRes = await mcClashServices.getClashTestResources(input)
-    for (let index in testRes.resources) {
-      let resurl = testRes.resources[index].url
-      let headers = testRes.resources[index].headers
-      let filename = testRes.resources[index].type + '.'+ testRes.resources[index].extension
-      let downloadRes = await utility.downloadResources(resurl, headers, thisClashVersionFolder, filename)
-      console.log('   Clash Data: ' + thisClashVersionFolder + filename)
-    }
-  } 
+      filename = DataNameEnum.INDEX_QUERY_RESULTS
+      let downloadRes = await utility.downloadResources(resurl, headers, folder, filename)
+      console.log(DataNameEnum.INDEX_QUERY_RESULTS + ' downloaded at ' + folder )  
+    } 
 }
 
 
+async function getClashIssueData(folder,input){ 
 
-async function getClashIssueData(thisClashVersionFolder,input){ 
+  if(fs.existsSync(folder + DataNameEnum.CLASH_ISSUES)){
+     //clash issue data are available
+     console.log(DataNameEnum.CLASH_ISSUES + ' are available at' + folder) 
+     return    
+  }  
   //clash issue 
   const clashIssueGroups = await mcClashServices.getMSAssignedClash(input)
-  console.log('   clash issues: ' + thisClashVersionFolder + 'clash-issues.json')
-  await utility.saveJsonObj(thisClashVersionFolder, 'clash-issues.json', clashIssueGroups)
+  await utility.saveJsonObj(folder, 'clash-issues.json', clashIssueGroups)
+  console.log(DataNameEnum.CLASH_ISSUES + ' downloaded at ' + folder ) 
+
 }
-
+  
 //build map with document displayname, index string and clash document id 
-async function buildDocsMap(mc_container_id,ms_id, ms_v_id) {
+async function buildDocsMap(folder) {
+ 
+  if(fs.existsSync(folder + DataNameEnum.DOCUMENTS_MAP)){
+    //document map  is available
+    console.log(DataNameEnum.DOCUMENTS_MAP + ' are available at' + folder) 
+    return    
+  }  
 
-  const thisClashVersionFolder = clashDataFolder + mc_container_id + '/'+ ms_id + '/' + ms_v_id + '/'
-  if (!fs.existsSync(thisClashVersionFolder))
-    return null
-
-  const msversionsBuffer = fs.readFileSync(thisClashVersionFolder + 'modelset-version.json')
+  const msversionsBuffer = fs.readFileSync(folder + DataNameEnum.MS_VERSIONS)
   const msversionsJson = JSON.parse(msversionsBuffer)
 
   const successDocs = msversionsJson.documentVersions.filter(function (data) {
     return data.documentStatus === 'Succeeded'
-  }) 
-
-
-  const indexManifestBuffer = fs.readFileSync(thisClashVersionFolder + 'index-manifest.json')
+  })   
+  const indexManifestBuffer = fs.readFileSync(folder + DataNameEnum.INDEX_MANIFEST)
   const indexManifestJson = JSON.parse(indexManifestBuffer)
-
-  const clashDocumentBuffer = fs.readFileSync(thisClashVersionFolder + 'scope-version-document.2.0.0.json.gz')
+ 
+  const clashDocumentBuffer = fs.readFileSync(folder + DataNameEnum.SCOPE_DOCUMENTS)
   const clashDocumentJson = JSON.parse(clashDocumentBuffer).documents
 
   let doc_map = []
@@ -199,7 +243,7 @@ async function buildDocsMap(mc_container_id,ms_id, ms_v_id) {
 
     const buff = new Buffer.from(successDocs[i].bubbleUrn);
     oneItem.urn = 'urn:' + buff.toString('base64').replace('/', '_').trim('=')
-  
+   
     //find index id (in string)
     let filter = indexManifestJson.seedFiles.filter(
       function (seedFile) {
@@ -213,8 +257,8 @@ async function buildDocsMap(mc_container_id,ms_id, ms_v_id) {
       console.log(docName + ' index string is not found')
       successMap = false
       break
-    }
-
+    }    
+    
     //map clash doc id (in number) with the document 
     filter = clashDocumentJson.filter(
       function (data) {
@@ -233,13 +277,57 @@ async function buildDocsMap(mc_container_id,ms_id, ms_v_id) {
   }
 
   if (successMap) {
-    console.log('   documents map: ' + thisClashVersionFolder + 'documents-map.json')
-    await utility.saveJsonObj(thisClashVersionFolder, 'documents-map.json', doc_map)
+    await utility.saveJsonObj(folder, DataNameEnum.DOCUMENTS_MAP, doc_map)
+    console.log(DataNameEnum.DOCUMENTS_MAP + ' downloaded at ' + folder ) 
     return doc_map
   }
   else
+    console.log(DataNameEnum.DOCUMENTS_MAP + ' FAILED at ' + folder )  
     return null
 }
+
+ 
+function getDocsMap(mc_container_id,ms_id, ms_v_id) {
+  try {
+    const thisClashVersionFolder = clashDataFolder + mc_container_id + '/'+ ms_id + '/' + ms_v_id + '/'
+    if (!fs.existsSync(thisClashVersionFolder))
+      return null
+
+    const docsMapBuffer = fs.readFileSync(thisClashVersionFolder + DataNameEnum.DOCUMENTS_MAP)
+    const docsMapObj = JSON.parse(docsMapBuffer)
+
+    return docsMapObj
+  }
+  catch (ex) {
+    return null
+  }
+}
+
+function getRawClashData(mc_container_id,ms_id, ms_v_id) { 
+  try {
+    const thisClashVersionFolder = clashDataFolder + mc_container_id + '/'+ ms_id + '/' + ms_v_id + '/'
+    if (!fs.existsSync(thisClashVersionFolder))
+      return null
+
+    var clashInstanceBuffer = fs.readFileSync(thisClashVersionFolder + DataNameEnum.SCOPE_INSTANCE)
+    var clashInsJsonObj = JSON.parse(clashInstanceBuffer)
+
+    var clashBuffer = fs.readFileSync(thisClashVersionFolder + DataNameEnum.SCOPE_CLASH)
+    var clashJsonObj = JSON.parse(clashBuffer)
+
+    var testBuffer = fs.readFileSync(thisClashVersionFolder + DataNameEnum.CLASH_TESTS)
+    var testJsonObj = JSON.parse(testBuffer) 
+
+    //send compressed data
+    const inputJson = { testJsonObj:testJsonObj,clashInsJsonObj: clashInsJsonObj, clashJsonObj: clashJsonObj }
+    const compressedStreaming = utility.compressStream(inputJson)
+
+    return compressedStreaming
+  }
+  catch (ex) {
+    return null
+  }
+} 
 
 
 function getMatrixData(mc_container_id, ms_id, ms_v_id, ignoredAssinedClash) {
@@ -249,13 +337,13 @@ function getMatrixData(mc_container_id, ms_id, ms_v_id, ignoredAssinedClash) {
     if (!fs.existsSync(thisClashVersionFolder))
       return null
 
-    var clashInstanceBuffer = fs.readFileSync(thisClashVersionFolder + 'scope-version-clash-instance.2.0.0.json.gz')
+    var clashInstanceBuffer = fs.readFileSync(thisClashVersionFolder + DataNameEnum.SCOPE_INSTANCE)
     var clashInsJsonObj = JSON.parse(clashInstanceBuffer).instances
 
-    var clashIssueBuffer = fs.readFileSync(thisClashVersionFolder + 'clash-issues.json')
+    var clashIssueBuffer = fs.readFileSync(thisClashVersionFolder + DataNameEnum.CLASH_ISSUES)
     var clashIssueJson = JSON.parse(clashIssueBuffer) 
 
-    const docsMapBuffer = fs.readFileSync(thisClashVersionFolder + 'modelset-version.json')
+    const docsMapBuffer = fs.readFileSync(thisClashVersionFolder + DataNameEnum.MS_VERSIONS)
     const docsMapObj = JSON.parse(docsMapBuffer)
 
     var dic = {}
@@ -302,48 +390,7 @@ function getMatrixData(mc_container_id, ms_id, ms_v_id, ignoredAssinedClash) {
     return null
   }
 }
-
-function getDocsMap(mc_container_id,ms_id, ms_v_id) {
-  try {
-    const thisClashVersionFolder = clashDataFolder + mc_container_id + '/'+ ms_id + '/' + ms_v_id + '/'
-    if (!fs.existsSync(thisClashVersionFolder))
-      return null
-
-    const docsMapBuffer = fs.readFileSync(thisClashVersionFolder + 'documents-map.json')
-    const docsMapObj = JSON.parse(docsMapBuffer)
-
-    return docsMapObj
-  }
-  catch (ex) {
-    return null
-  }
-}
-
-function getRawClashData(mc_container_id,ms_id, ms_v_id) {
-
-  try {
-    const thisClashVersionFolder = clashDataFolder + mc_container_id + '/'+ ms_id + '/' + ms_v_id + '/'
-    if (!fs.existsSync(thisClashVersionFolder))
-      return null
-
-    var clashInstanceBuffer = fs.readFileSync(thisClashVersionFolder + 'scope-version-clash-instance.2.0.0.json.gz')
-    var clashInsJsonObj = JSON.parse(clashInstanceBuffer)
-
-    var clashBuffer = fs.readFileSync(thisClashVersionFolder + 'scope-version-clash.2.0.0.json.gz')
-    var clashJsonObj = JSON.parse(clashBuffer)
-
-    var testBuffer = fs.readFileSync(thisClashVersionFolder + 'clash-tests.json')
-    var testJsonObj = JSON.parse(testBuffer) 
-
-    const inputJson = { testJsonObj:testJsonObj,clashInsJsonObj: clashInsJsonObj, clashJsonObj: clashJsonObj }
-    const compressedStreaming = utility.compressStream(inputJson)
-
-    return compressedStreaming
-  }
-  catch (ex) {
-    return null
-  }
-} 
+ 
 
 async function clashedObjectsInTwoDocs(twoDocuments,mc_container_id,ms_id, ms_v_id) {  
 
@@ -352,14 +399,14 @@ async function clashedObjectsInTwoDocs(twoDocuments,mc_container_id,ms_id, ms_v_
     return null
 
   const clashInstanceBuffer = fs.readFileSync(thisClashVersionFolder 
-                                              + 'scope-version-clash-instance.2.0.0.json.gz')
+                                              + DataNameEnum.SCOPE_INSTANCE)
   const clashInstanceJson = JSON.parse(clashInstanceBuffer).instances
 
   const clashBuffer = fs.readFileSync(thisClashVersionFolder 
-                                      + 'scope-version-clash.2.0.0.json.gz')
+                                      + DataNameEnum.SCOPE_CLASH)
   const clashJson = JSON.parse(clashBuffer).clashes
 
-  const indexResultsJson = await utility.readLinesFile(thisClashVersionFolder + 'index-query-results.json.gz')  
+  const indexResultsJson = await utility.readLinesFile(thisClashVersionFolder + DataNameEnum.INDEX_QUERY_RESULTS) 
   
   const modelDocId0 = twoDocuments[0].clashDocId
   const modelDocId1 = twoDocuments[1].clashDocId 
