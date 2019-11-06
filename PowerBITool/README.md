@@ -36,11 +36,11 @@ In this [sample of Model Coordination API](../README.md), it allows the user to 
 
     <img src="https://github.com/xiaodongliang/repository-readme-help/blob/master/bim360-model.coordination-powerBI/grant.png" width="300">   
   
-4. log in [PowerBI web app](http://app.powerbi.com), swtich to the workspace you want to create dataset and report. From address box of the browser, copy the workspace id (_group id_ in API) to _workspaceId_[config.js](./config.js)
+4. log in [PowerBI web app](http://app.powerbi.com), swtich to the workspace you want to create dataset and report. From address box of the browser, copy the workspace id (_group id_ in API) to _workspaceId_ [config.js](./config.js)
 
     <img src="https://github.com/xiaodongliang/repository-readme-help/blob/master/bim360-model.coordination-powerBI/workspace.png" width="500">   
 
-5. When the account info and relevant ids are ready,input your desired dataset name and table name in [config.js](./config.js), finally run 
+5. When the account info and relevant ids are ready, input your desired dataset name and table name in [config.js](./config.js), finally run 
     ```
     node start.js
     ```
@@ -48,7 +48,7 @@ In this [sample of Model Coordination API](../README.md), it allows the user to 
 
     <img src="https://github.com/xiaodongliang/repository-readme-help/blob/master/bim360-model.coordination-powerBI/dataset.png" width="400">   
 
-6. After step #5 succeeds, log in [PowerBI web app](http://app.powerbi.com), swtich to the workspace, check if the new dataset can be opened without problem. Based on this dataset, insert table view, ticking all the data columns.
+6. After step #5 succeeds, log in [PowerBI web app](http://app.powerbi.com), switch to the workspace, check if the new dataset can be opened without problem. Based on this dataset, insert table view, ticking all the data columns.
 
     <img src="https://github.com/xiaodongliang/repository-readme-help/blob/master/bim360-model.coordination-powerBI/table.png" width="400">   
 

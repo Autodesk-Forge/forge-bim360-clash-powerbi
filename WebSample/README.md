@@ -43,19 +43,19 @@ Watch [this video](https://youtu.be/pQaO2Dta97g) on how to play this demo.
 
 ### Demo 1: Matrix View of Clash
 1. After the user logs in, select one project in the left panel tree.
-2. After modelset list is refreshed, select one modelset. Note: the sample only works with the modelsets which are created after Oct 1st Because Model Coordination API updated and some logic of documents mapping are changed.  
+2. After modelset list is refreshed, select one modelset. *Note: the sample only works with the modelsets which are created after Oct 1st Because Model Coordination API updated and some logic of documents mapping are changed.*  
 3. When one modelset is selected, the code will firstly dump all relevant data of clash, index of objects, and build the map of documents and clashes. Finally a **Matrix View by Object Count of Active Clash** will be generated. It is same to Grid View of Clash on BIM 360 UI. 
 
-The count in the table indicates how many objects of document (left column) have clash with document (top row). The objects will be excluded if their corresponding clashes have been assigned with a clash issue. Check [API document](https://dev.forge.autodesk.com/en/docs/bim360/v1/tutorials/model-coordination/mc-concept-clash/?sha=6092_51) for more detail on what is matrix view of clash.
+The count in the table indicates how many objects of the document (left column) have a clash with the document (top row). The objects will be excluded if their corresponding clashes have been assigned with a clash issue. Check [API document](https://dev.forge.autodesk.com/en/docs/bim360/v1/tutorials/model-coordination/mc-concept-clash/?sha=6092_51) for more detail on what is matrix view of clash.
 
   <p align="center"><img src="./help/matrix.png" width="800"></p>   
 
 ### Demo 2: PowerBI Anlaysis
 1. When **Matrix View by Object Count of Active Clash** is ready, click one cell which has value. 
-2. The corresponding pair of documents (LEFT & RIGHT) will be loaded in Forge Viewer
-3. In the same time, the corresponding PowerBI report is loaded. It indicates the clashes by objects categories, and clustered by the two documents.
-4. Click a category, the corresponding table records will be shown up in table view of PowerBI. The clashes will be highlighted in Forge Viewer. All objects of LEFT document will be in red, while objects of RIGHT document will be in blue. 
-5. Click **Export Data** of PowerBI view to dump the filtered records to Excel.
+2. The corresponding pair of documents (LEFT & RIGHT) will be loaded in the Forge Viewer
+3. At the same time, the corresponding PowerBI report is loaded. It indicates the clashes by object categories, and clustered by the two documents.
+4. Click a category, the corresponding table records will be shown up in the table view of PowerBI. The classes will be highlighted in the Forge Viewer. All objects of LEFT document will be in red, while objects of RIGHT document will be in blue.
+5. Click **Export Data** of PowerBI view to add the filtered records to Excel.
 6. Click a single record in the table view, the clahes will be highlighted as well.
  
    <p align="center"><img src="./help/powerbi.png" width="800"></p>  
@@ -71,7 +71,7 @@ The relationship of the data are demoed in the figure below:
 
  <p align="center"><img src="./help/relationship.png" width="800"></p>  
 
-Based on the relationship, the code analyzes the data to build the mapping among clash document, version URN and viewerable guid etc. The mapping is saved to **docsMap.json**
+Based on the relationship, the code analyzes the data to build the mapping among clash document, version URN and viewable guid etc. The mapping is saved to **docsMap.json**
 
  <p align="center"><img src="./help/docmap.png" width="400"></p>   
 
@@ -110,16 +110,16 @@ Watch [this video](https://www.youtube.com/watch?v=Oqa9O20Gj0c) on how deploy sa
  
 
 # Further Reading
-- [BIM 360 API](https://developer.autodesk.com/en/docs/bim360/v1/overview/) and [App Provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps)
-- [Data Management API](https://developer.autodesk.com/en/docs/data/v2/overview/)
-- [Viewer](https://developer.autodesk.com/en/docs/viewer/v7)
+- [BIM 360 API](https://forge.autodesk.com/en/docs/bim360/v1/overview/) and [App Provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps)
+- [Data Management API](https://forge.autodesk.com/en/docs/data/v2/overview/)
+- [Viewer](https://forge.autodesk.com/en/docs/viewer/v7)
  
 
 Tutorials:
 
 - [View BIM 360 Models](http://learnforge.autodesk.io/#/tutorials/viewhubmodels)
 - [Model Coordination API Document](TODO)
-- [Retrieve Issues](https://developer.autodesk.com/en/docs/bim360/v1/tutorials/retrieve-issues)
+- [Retrieve Issues](https://forge.autodesk.com/en/docs/bim360/v1/tutorials/retrieve-issues)
 
 Blogs:
 
