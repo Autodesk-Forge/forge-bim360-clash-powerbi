@@ -16,7 +16,7 @@
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////
 
-'use strict'; 
+'use strict';
 
 module.exports = {
 
@@ -26,28 +26,28 @@ module.exports = {
     client_secret: process.env.FORGE_CLIENT_SECRET || 'Your Forge Client Secret'
   },
   //ensure the callback url is same to what has been registered with the Forge app
-  callbackURL: process.env.FORGE_CALLBACK_URL || 
-        'http://localhost:3000/oauth/callback',  
+  callbackURL: process.env.FORGE_CALLBACK_URL ||
+    'http://localhost:3000/oauth/callback',
 
   // Required scopes for your application on server-side
-  scopeInternal: ['account:read','bucket:create', 'bucket:read', 'data:read', 'data:create', 'data:write'],
+  scopeInternal: ['account:read', 'bucket:create', 'bucket:read', 'data:read', 'data:create', 'data:write'],
   // Required scope of the token sent to the client
   scopePublic: ['viewables:read'],
 
-  pb:{
-     AuthorityUrl : 'https://login.microsoftonline.com/common',
-     resourceUrl : 'https://analysis.windows.net/powerbi/api',
-     apiUrl : 'https://api.powerbi.com',
-     embedUrlBase : 'https://app.powerbi.com',
+  pb: {
+    AuthorityUrl: 'https://login.microsoftonline.com/common',
+    resourceUrl: 'https://analysis.windows.net/powerbi/api',
+    apiUrl: 'https://api.powerbi.com',
+    embedUrlBase: 'https://app.powerbi.com',
 
-     pbiUsername : '<Your PowerBI user name>',
-     pbiPassword : '<Your PowerBI user password>',  
-     applicationId : '<Your PowerBI application id >',
-     workspaceId : '<Your PowerBI workspace id>',
-     reportId : '<Your PowerBI report id>',
-     datasetId:'<Your PowerBI dataset id>',
-     tableName:'<Your PowerBI data table name>' 
-  }, 
+    pbiUsername: '<Your PowerBI user name>',
+    pbiPassword: '<Your PowerBI user password>',
+    applicationId: '<Your PowerBI application id >',
+    workspaceId: '<Your PowerBI workspace id>',
+    reportId: '<Your PowerBI report id>',
+    datasetId: '<Your PowerBI dataset id>',
+    tableName: '<Your PowerBI data table name>'
+  },
 
   hqv1: {
     basedUrl: 'https://developer.api.autodesk.com',
@@ -57,13 +57,13 @@ module.exports = {
         'Content-Type': 'application/json'
       }
     },
-    getUserProfileAtMe:function(){
-      return this.basedUrl+ '/userprofile/v1/users/@me'
+    getUserProfileAtMe: function () {
+      return this.basedUrl + '/userprofile/v1/users/@me'
     }
-   },
+  },
 
   //Issue API v1
-  issuev1: { 
+  issuev1: {
 
     basedUrl: 'https://developer.api.autodesk.com/issues/v1/containers/',
     httpHeaders: function (access_token) {
@@ -84,17 +84,17 @@ module.exports = {
     getOneIssue: function (containerId, issueId) {
       return this.basedUrl + containerId + '/quality-issues/' + issueId;
     },
-    createComments: function(containerId) {
+    createComments: function (containerId) {
       return this.basedUrl + containerId + '/comments';
     },
     createAttachments: function (containerId) {
       return this.basedUrl + containerId + '/attachments';;
     },
-    getIssueType:function(containerId){
-      return this.basedUrl + containerId + '/ng-issue-types?include=subtypes';; 
+    getIssueType: function (containerId) {
+      return this.basedUrl + containerId + '/ng-issue-types?include=subtypes';;
     },
-    getRootCause:function(containerId){
-      return this.basedUrl + containerId + '/root-causes';; 
+    getRootCause: function (containerId) {
+      return this.basedUrl + containerId + '/root-causes';;
     }
   }
 };

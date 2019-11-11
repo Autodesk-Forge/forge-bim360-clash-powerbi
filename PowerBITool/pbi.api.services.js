@@ -55,10 +55,13 @@ async function getOpenIdToken() {
     const response = await fetch(endpoint, options);
     if (response.status == 200 || response.status == 201 || response.status == 204) {
         const json = await response.json();
+        console.log('get openId token succeeded' ) 
         return json
      } else {
-        const message = response.text();
-        return message
+        const text = await response.text() 
+        const statusText = await response.statusText() 
+        console.log('get openId token failed' + text!=''?text:statusText )
+        return null
      }
 } 
 
@@ -75,8 +78,9 @@ async function getDatasets(){
         const json = await response.json();
         return json.value
     } else {
-        const message = await response.text();
-        console.log('get Dataset failed' + message)
+        const text = await response.text() 
+        const statusText = await response.statusText() 
+        console.log('get dataset failed' + text!=''?text:statusText )
         return null
     }   
 }
@@ -94,10 +98,12 @@ async function deleteDataset(dataset_id){
     const options = { method: 'DELETE', headers: headers || {}};
     const response = await fetch(endpoint, options);
     if (response.status == 200 ) {
-         return true
+        console.log('delete dataset succeeded' )  
+        return true
     } else {
-        const message = await response.text();
-        console.log('deleteDataset failed' + message)
+        const text = await response.text() 
+        const statusText = await response.statusText() 
+        console.log('delete dataset failed' + text!=''?text:statusText )
         return null
     }  
 } 
@@ -147,10 +153,12 @@ async function createDataset(dataset_name,table_name) {
     const response = await fetch(endpoint, options);
     if (response.status == 201 ) {
         const json = await response.json();
+        console.log('create dataset succeeded' )    
         return json
     } else {
-        const message = await response.text();
-        console.log('Create dataset failed' + message)
+        const text = await response.text() 
+        const statusText = await response.statusText() 
+        console.log('create dataset failed' + text!=''?text:statusText )
         return null
     }  
 }   
@@ -171,10 +179,12 @@ async function pushDataToDataset(dataset_id,table_name,data){
     const options = { method: 'POST', headers: headers || {},body: JSON.stringify(body) };
     const response = await fetch(endpoint, options);
     if (response.status == 200 ) { 
+        console.log(' push data to dataset succeeded') 
         return true
     } else {
-        const message = await response.text();
-        console.log(' pushDataToDataset failed' + message)
+        const text = await response.text() 
+        const statusText = await response.statusText() 
+        console.log('push data to dataset failed' + text!=''?text:statusText ) 
         return null
     }   
 }
@@ -196,10 +206,12 @@ async function deleteRows(dataset_id,table_name){
     const options = { method: 'DELETE', headers: headers || {}};
     const response = await fetch(endpoint, options);
     if (response.status == 200 ) {
+        console.log(' delete rows succeeded')  
          return true
     } else {
-        const message = await response.text();
-        console.log('deleteRows failed' + message)
+        const text = await response.text() 
+        const statusText = await response.statusText() 
+        console.log(' delete rows failed' + text!=''?text:statusText ) 
         return null
     }  
 } 
