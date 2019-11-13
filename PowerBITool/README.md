@@ -34,7 +34,7 @@ In this [sample of Model Coordination API](../README.md), it allows the user to 
 
  * Grant consent of the application to all users of the **Azure Directory**
 
-    <img src="./help/grant.png" width="800">   
+    <img src="./help/grant.png" width="600">   
   
 4. log in [PowerBI web app](http://app.powerbi.com), switch to the workspace you want to create dataset and report. From address box of the browser, copy the workspace id (_group id_ in API) to _workspaceId_ [config.js](./config.js)
 
@@ -65,11 +65,11 @@ In this [sample of Model Coordination API](../README.md), it allows the user to 
 
 9. Arrange table view and bubble view vertically and set the report size, in order to fit to the UI of the [sample of Model Coordination API](../README.md). 
 
-    <img src="./help/report.png" width="800">   
+    <img src="./help/report.png" width="700">   
 
 10. Copy the report id, dataset id, workspace id for configuration of [sample of Model Coordination API](../README.md).
 
-    <img src="./help/reportid.png" width="800">   
+    <img src="./help/reportid.png" width="600">   
 
 
 Congratulations! you are ready to integrate with  [sample of Model Coordination API](../README.md) now!
