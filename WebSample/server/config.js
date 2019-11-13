@@ -27,7 +27,7 @@ module.exports = {
   },
   //ensure the callback url is same to what has been registered with the Forge app
   callbackURL: process.env.FORGE_CALLBACK_URL ||
-    'http://localhost:3000/oauth/callback',
+    '<Your App URL>/oauth/callback',
 
   // Required scopes for your application on server-side
   scopeInternal: ['account:read', 'bucket:create', 'bucket:read', 'data:read', 'data:create', 'data:write'],

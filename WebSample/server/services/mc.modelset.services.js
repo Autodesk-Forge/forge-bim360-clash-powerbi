@@ -18,10 +18,7 @@
 
 'use strict';    
  
-//const msclient = require("../MCAPI/Modelset") 
-
-const msclient = require("@adsk/autodesk-forge-bim360-modelcoordination-modelset") 
-
+const msclient = require("forge-bim360-modelcoordination-modelset")  
 
 module.exports = { 
     getModelSets:getModelSets,
@@ -33,14 +30,14 @@ module.exports = {
 async function getModelSets(input) {
   msclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
   return new Promise((resolve, reject) => {
-      const containersApi = new msclient.ContainersApi() 
-      containersApi.getModelSets(input.mc_container_id)
+      const modelsetApi = new msclient.ModelSetApi() 
+      modelsetApi.getModelSets(input.mc_container_id)
       .then(res=>{
           resolve(res)
       })
       .catch(ex =>{
           console.log(ex) 
-          reject(ex)
+          reject(null)
       })  
   })  
 } 
@@ -48,8 +45,8 @@ async function getModelSets(input) {
 async function getModelSet(input) {
   msclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
   return new Promise((resolve, reject) => {
-      const modelsetsApi = new msclient.ModelSetsApi()
-      modelsetsApi.getModelSet(input.mc_container_id,input.ms_id)
+    const modelsetApi = new msclient.ModelSetApi() 
+    modelsetApi.getModelSet(input.mc_container_id,input.ms_id)
       .then(res=>{
           resolve(res)
       })

@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "@adsk/autodesk-forge-bim360-modelcoordination-clash": "^3.3.17",
-    "@adsk/autodesk-forge-bim360-modelcoordination-index": "^1.2.32",
-    "@adsk/autodesk-forge-bim360-modelcoordination-modelset": "^3.0.51",
-    "@adsk/autodesk-forge-bim360-relationship": "^2.0.21",
+    "forge-bim360-modelcoordination-clash": "^3.3.27",
+    "forge-bim360-modelcoordination-modelset": "^3.0.65",
+    "forge-bim360-modelcoordination-index": "^1.2.44",
     "all": "0.0.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "1.4.3",
