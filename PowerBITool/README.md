@@ -42,6 +42,7 @@ In this [sample of Model Coordination API](../README.md), it allows the user to 
 
 5. When the account info and relevant ids are ready, input your desired dataset name and table name in [config.js](./config.js), finally run 
     ```
+    npm install
     node start.js
     ```
    It will create dataset with the desired name and table schema. The table columns will be defined with the same schemea from clash analysis of Model Coordination API. Two dummy rows are created for design PowerBI report in step #6
