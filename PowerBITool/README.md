@@ -17,28 +17,28 @@ In this [sample of Model Coordination API](../README.md), it allows the user to 
 
 2. [Register an Azure AD application to use with Power BI](https://docs.microsoft.com/en-us/power-bi/developer/register-app). They way [Power BI App Registration Tool](https://dev.powerbi.com/apps) is recommended. Make a note with Application Id. Input the id to _applicationId_ in [config.js](./config.js)
 
-    <img src="./help/registerapp.png" width="600">   
+    <img src="./help/registerapp.png" width="800">   
  
     **Troubleshooting**: If your work/school account has not permission to register application, try to create a [Azure Directory](https://portal.azure.com/#create/Microsoft.AzureActiveDirectory) and create a [tenant user](https://docs.microsoft.com/en-us/power-bi/developer/create-an-azure-active-directory-tenant). By the tenant account, register application of PowerBI to work with PowerBI app. OR check with administrator of your work/school to add related permissions on your main account.
  
-    <img src="./help/adtenant.png" width="500">   
+    <img src="./help/adtenant.png" width="800">   
  
 3. In order to get OpenId token without authorization workflow, ensure the following settings are done:
  * user or tenant user has role with **application administrator**
 
-    <img src="./help/appadmin.png" width="500"> 
+    <img src="./help/appadmin.png" width="800"> 
 
  * default client type is treated as **public client**.
 
-    <img src="./help/clienttype.png" width="500">  
+    <img src="./help/clienttype.png" width="800">  
 
  * Grant consent of the application to all users of the **Azure Directory**
 
-    <img src="./help/grant.png" width="500">   
+    <img src="./help/grant.png" width="800">   
   
 4. log in [PowerBI web app](http://app.powerbi.com), switch to the workspace you want to create dataset and report. From address box of the browser, copy the workspace id (_group id_ in API) to _workspaceId_ [config.js](./config.js)
 
-    <img src="./help/workspace.png" width="500">   
+    <img src="./help/workspace.png" width="800">   
 
 5. When the account info and relevant ids are ready, input your desired dataset name and table name in [config.js](./config.js), finally run 
     ```
@@ -46,30 +46,30 @@ In this [sample of Model Coordination API](../README.md), it allows the user to 
     ```
    It will create dataset with the desired name and table schema. The table columns will be defined with the same schemea from clash analysis of Model Coordination API. Two dummy rows are created for design PowerBI report in step #6
 
-    <img src="/dataset.png" width="600">   
+    <img src="/dataset.png" width="800">   
 
 6. After step #5 succeeds, log in [PowerBI web app](http://app.powerbi.com), switch to the workspace, click the new dataset to check if it can be opened without problem. Based on this dataset, insert table view, ticking all the data columns.
 
-    <img src="./help/table.png" width="600">   
+    <img src="./help/table.png" width="800">   
 
 7. Add Bubble Chart widge to the view from PowerBI Market.
 
 
-    <img src="./help/market.png" width="600">   
+    <img src="./help/market.png" width="800">   
 
 
 8. Insert bubble view to the report. _cat_ as bubble name, _ClashCount_ as bubble value, _docname_ as cluster.
 
 
-    <img src="./help/bubble.png" width="600">   
+    <img src="./help/bubble.png" width="800">   
 
 9. Arrange table view and bubble view vertically and set the report size, in order to fit to the UI of the [sample of Model Coordination API](../README.md). 
 
-    <img src="./help/report.png" width="500">   
+    <img src="./help/report.png" width="800">   
 
 10. Copy the report id, dataset id, workspace id for configuration of [sample of Model Coordination API](../README.md).
 
-    <img src="./help/reportid.png" width="600">   
+    <img src="./help/reportid.png" width="800">   
 
 
 Congratulations! you are ready to integrate with  [sample of Model Coordination API](../README.md) now!
