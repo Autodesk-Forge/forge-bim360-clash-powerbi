@@ -18,9 +18,8 @@
 
 'use strict';    
  
-//const indexclient = require("../MCAPI/Index") 
-const indexclient = require("@adsk/autodesk-forge-bim360-modelcoordination-index") 
-
+const indexclient = require("forge-bim360-modelcoordination-index")  
+ 
 module.exports = { 
     queryModelSetVersionIndexManifest:queryModelSetVersionIndexManifest,
     queryModelSetVersionIndexFields:queryModelSetVersionIndexFields,
@@ -32,7 +31,7 @@ async function queryModelSetVersionIndexManifest(input) {
     indexclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
 
     return new Promise((resolve, reject) => {
-        const indexApi = new indexclient.IndexApi() 
+        const indexApi = new indexclient.PropertyIndexApi() 
         indexApi.queryModelSetVersionIndexManifest(input.mc_container_id,input.ms_id,input.ms_v_id)
         .then(res=>{
             resolve(res)
@@ -49,7 +48,7 @@ async function queryModelSetVersionIndexFields(input) {
     indexclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
 
     return new Promise((resolve, reject) => {
-        const indexApi = new indexclient.IndexApi() 
+        const indexApi = new indexclient.PropertyIndexApi() 
         indexApi.queryModelSetVersionIndexFields(input.mc_container_id,input.ms_id,input.ms_v_id)
         .then(res=>{
             resolve(res)
@@ -65,7 +64,7 @@ async function QueryIndex(input) {
     indexclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
 
     return new Promise((resolve, reject) => {
-        const indexApi = new indexclient.IndexApi()
+        const indexApi = new indexclient.PropertyIndexApi()
 
         indexApi.queryModelSetVersionIndex(input.mc_container_id,input.ms_id,input.ms_v_id,{indexQuery:{statement:input.indexQuery}})
         .then(res=>{
@@ -82,7 +81,7 @@ async function getIndexJob(input) {
     indexclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
 
     return new Promise((resolve, reject) => {
-        const indexApi = new indexclient.IndexApi() 
+        const indexApi = new indexclient.PropertyIndexApi() 
         indexApi.getModelSetJob(input.mc_container_id,input.ms_id,input.job_id)
         .then(res=>{
             resolve(res)
