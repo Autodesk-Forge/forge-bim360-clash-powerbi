@@ -14,8 +14,6 @@ This sample is licensed under the terms of the [MIT License](http://opensource.o
 
 ## Written by
 
-- Xiaodong Liang [@coldwood](https://twitter.com/coldwood)
-- Reviewed by Jaime Rosales Duque [@AfroJme](https://twitter.com/AfroJme)
-
-[Forge Partner Development](http://forge.autodesk.com)
+- Xiaodong Liang [@coldwood](https://twitter.com/coldwood),[Forge Partner Development](http://forge.autodesk.com)
+- Reviewed by Jaime Rosales Duque [@AfroJme](https://twitter.com/AfroJme), [Forge Partner Development](http://forge.autodesk.com)
 
