@@ -2,22 +2,22 @@
 
 This repository demonstrates the scenario: analyze clash data by BIM 360 Model Coordination API with [PowerBI](https://powerbi.microsoft.com/en-us/). 
 
-[![node](https://img.shields.io/badge/nodejs-6.11.1-yellow.svg)](https://nodejs.org)
+[![Node.js](https://img.shields.io/badge/Node.js-12.8.1-blue.svg)](https://nodejs.org)
 [![npm](https://img.shields.io/badge/npm-3.10.10-green.svg)](https://www.npmjs.com/)
 [![visual code](https://img.shields.io/badge/visual%20code-1.28.2-orange.svg)](https://code.visualstudio.com)
 
 [![oAuth2](https://img.shields.io/badge/oAuth2-v1-green.svg)](https://forge.autodesk.com/en/docs/oauth/v2/overview/)
 [![Data-Management](https://img.shields.io/badge/Data%20Management-v1-green.svg)](https://forge.autodesk.com/en/docs/data/v2/developers_guide/overview/)
-[![Viewer](https://img.shields.io/badge/Viewer-v7-green.svg)](https://forge.autodesk.com/en/docs/viewer/v7/developers_guide/overview/)
-[![BIM-360](https://img.shields.io/badge/BIM%20360-v1-green.svg)](https://forge.autodesk.com/en/docs/bim360/v1/overview/introduction/) 
+[![Forge Viewer](https://img.shields.io/badge/Viewer-v7-green.svg)](https://forge.autodesk.com/en/docs/viewer/v7/developers_guide/overview/)
+[![BIM360](https://img.shields.io/badge/BIM%20360-v1-green.svg)](https://forge.autodesk.com/en/docs/bim360/v1/overview/introduction/) 
 
 
 [![PowerBI-Client](https://img.shields.io/badge/PowerBI--Client-v2.8.0-orange)](https://github.com/microsoft/PowerBI-JavaScript)
-[![PowerBIAPI](https://img.shields.io/badge/PowerBI-v1.0-blue)](https://docs.microsoft.com/en-us/rest/api/power-bi/)
+[![PowerBI-API](https://img.shields.io/badge/PowerBI-v1.0-blue)](https://docs.microsoft.com/en-us/rest/api/power-bi/)
 
-[![ModelSetAPI](https://img.shields.io/badge/ModelSetAPI-3.0.65-orange)](https://www.npmjs.com/package/forge-bim360-modelcoordination-modelset)
-[![ClashAPI](https://img.shields.io/badge/ClashAPI-3.3.27-yellowgreen)](https://www.npmjs.com/package/forge-bim360-modelcoordination-clash)
-[![IndexAPI](https://img.shields.io/badge/IndexAPI-1.2.44-green)](https://www.npmjs.com/package/forge-bim360-modelcoordination-index)
+[![BIM360 ModelSet API](https://img.shields.io/badge/ModelSetAPI-3.0.65-orange)](https://www.npmjs.com/package/forge-bim360-modelcoordination-modelset)
+[![BIM360 Clash API](https://img.shields.io/badge/ClashAPI-3.3.27-yellowgreen)](https://www.npmjs.com/package/forge-bim360-modelcoordination-clash)
+[![BIM360 Index API](https://img.shields.io/badge/IndexAPI-1.2.44-green)](https://www.npmjs.com/package/forge-bim360-modelcoordination-index)
 
 [![License](http://img.shields.io/:license-mit-red.svg)](http://opensource.org/licenses/MIT)
 [![Level](https://img.shields.io/badge/Level-Intermediate-blue.svg)](http://developer.autodesk.com/)
@@ -148,4 +148,5 @@ This sample is licensed under the terms of the [MIT License](http://opensource.o
 
 ## Written by
 
-Xiaodong Liang [@coldwood](https://twitter.com/coldwood), [Forge Partner Development](http://forge.autodesk.com)
+- Xiaodong Liang [@coldwood](https://twitter.com/coldwood),[Forge Partner Development](http://forge.autodesk.com)
+- Reviewed by Jaime Rosales Duque [@AfroJme](https://twitter.com/AfroJme), [Forge Partner Development](http://forge.autodesk.com)
