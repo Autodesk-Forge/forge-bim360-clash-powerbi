@@ -1,12 +1,17 @@
-# bim360-mcapi-node-powerbi.sample
-This repository demonstrates the scenario: analyze clash data and clash issue by BIM 360 Model Coordination API with [PowerBI](https://powerbi.microsoft.com/en-us/). 
+# BIM 360 Model Coordination: PowerBI report
 
-[WebSample](./WebSample/README.md) is the source project of this sample. [PowerBITool](./PowerBITool/README.md) is the tool for prepraring the relevant data of PowerBI report. Check those readme for detailed steps.
+This repository demonstrates the scenario: analyze clash data and clash issue by BIM 360 Model Coordination API with [PowerBI](https://powerbi.microsoft.com/en-us/). It includes 2 modules:
 
-  <img src="https://github.com/xiaodongliang/repository-readme-help/blob/master/bim360-model.coordination-powerBI/main.png" width="800">
+- [PowerBITool](./PowerBITool/README.md) is the tool for prepraring the relevant data of PowerBI report. 
+- [WebSample](./WebSample/README.md) is the source project of this sample. 
+
+# Thumbnail
+
+![thumbnail](/thumbnail.png)
   
-  Watch [this video](https://youtu.be/pQaO2Dta97g) on how to play this demo.
+# Demonstration
 
+Recording: [this video](https://youtu.be/pQaO2Dta97g) on how to use this demo.
 
 ## License
 

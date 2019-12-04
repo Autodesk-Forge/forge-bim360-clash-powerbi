@@ -95,4 +95,4 @@ finally run
    <img src="./help/reportid.png" width="600">   
 
 
-Congratulations! you are ready to integrate with the [Model Coordination API sample](../README.md) now!
+Congratulations! you are ready to integrate with the [WebSample](../WebSample/README.md) now!
