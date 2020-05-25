@@ -21,15 +21,15 @@
 module.exports = { 
 
   pbi:{
-     pbiUsername : '<your PowerBI account name>',
-     pbiPassword : '<your PowerBI password>', 
+     pbiUsername : '<prakash.p@bialairport.com>',
+     pbiPassword : '<Swamimalai@1973>', 
      AuthorityUrl : 'https://login.microsoftonline.com/common',
      resourceUrl : 'https://analysis.windows.net/powerbi/api',
      apiUrl : 'https://api.powerbi.com',
      embedUrlBase : 'https://app.powerbi.com', 
-     applicationId : '<your PowerBI application id>',
-     workspaceId : '<your PowerBI workspace (group) id>', 
-     dataset_name:'<your PowerBI dataset name>',
-     table_name:'<your PowerBI table name>'
+     applicationId : '<7d3dcb86-2760-44e7-b42a-f06ca5c3c23f>',
+     workspaceId : '<d2567bce-e6cb-4d9f-9367-a34d7366ca64>', 
+     dataset_name:'<T2 Basement>',
+     table_name:'<Table 1>'
   } 
 };
