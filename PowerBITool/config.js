@@ -21,15 +21,16 @@
 module.exports = { 
 
   pbi:{
-     pbiUsername : '<your PowerBI account name>',
-     pbiPassword : '<your PowerBI password>', 
      AuthorityUrl : 'https://login.microsoftonline.com/common',
      resourceUrl : 'https://analysis.windows.net/powerbi/api',
      apiUrl : 'https://api.powerbi.com',
      embedUrlBase : 'https://app.powerbi.com', 
-     applicationId : '<your PowerBI application id>',
-     workspaceId : '<your PowerBI workspace (group) id>', 
-     dataset_name:'<your PowerBI dataset name>',
-     table_name:'<your PowerBI table name>'
+    
+     pbiUsername : process.env.POWERBI_USERNAME || '<your PowerBI account name>',
+     pbiPassword : process.env.POWERBI_PASSWORD || '<your PowerBI password>', 
+     applicationId : process.env.POWERBI_APP_ID || '<your PowerBI application id>',
+     workspaceId : process.env.POWERBI_WORKSPACE_ID || '<your PowerBI workspace (group) id>', 
+     dataset_name:process.env.POWERBI_DATASET_NAME || '<your PowerBI dataset name>',
+     table_name:process.env.POWERBI_TABLE_NAME ||'<your PowerBI table name>'
   } 
 };
