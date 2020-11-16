@@ -43,6 +43,7 @@ module.exports = {
     pbiUsername: '<Your PowerBI user name>',
     pbiPassword: '<Your PowerBI user password>',
     applicationId: '<Your PowerBI application id >',
+    applicationSecret: '<Your PowerBI application secret >', 
     workspaceId: '<Your PowerBI workspace id>',
     reportId: '<Your PowerBI report id>',
     datasetId: '<Your PowerBI dataset id>',

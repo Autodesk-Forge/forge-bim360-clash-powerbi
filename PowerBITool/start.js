@@ -35,6 +35,10 @@ async function start() {
         if (filter && filter.length > 0 && filter[0].addRowsAPIEnabled) {
             //delete previous rows
             dataset_id = filter[0].id
+
+            //get tables
+            //const dataSet_tables = await pbi.getTables(dataset_id)
+
             //we assume the dataset contains a table with the name like config.pbi.table_name
             const deleteRowsRes = await pbi.deleteRows(dataset_id, config.pbi.table_name)
             if (!deleteRowsRes)
