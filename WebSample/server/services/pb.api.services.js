@@ -72,7 +72,9 @@ async function getOpenIdToken() {
         resource: config.pb.resourceUrl,
         username: config.pb.pbiUsername,
         password: config.pb.pbiPassword,
-        grant_type: 'password'
+        grant_type: 'password',
+        client_secret:config.pb.applicationSecret
+
     }
     var formBody = [];
     for (var property in body) {

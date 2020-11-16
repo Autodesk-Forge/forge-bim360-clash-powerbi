@@ -21,11 +21,12 @@ const fetch = require('node-fetch');
 const config = require('./config')
 
 module.exports = {
-    getDatasets:getDatasets,
-    createDataset:createDataset,
-    pushDataToDataset:pushDataToDataset, 
-    deleteRows:deleteRows,
-    deleteDataset:deleteDataset
+    getDatasets,
+    createDataset,
+    pushDataToDataset, 
+    deleteRows,
+    deleteDataset,
+    getTables
 }
  
 async function getOpenIdToken() {
@@ -39,7 +40,8 @@ async function getOpenIdToken() {
         resource: config.pbi.resourceUrl,
         username: config.pbi.pbiUsername,
         password: config.pbi.pbiPassword,
-        grant_type: 'password'
+        grant_type: 'password',
+        client_secret:config.pbi.applicationSecret
     }
     var formBody = [];
     for (var property in body) {
@@ -212,6 +214,32 @@ async function deleteRows(dataset_id,table_name){
         const text = await response.text() 
         const statusText = await response.statusText() 
         console.log(' delete rows failed' + text!=''?text:statusText ) 
+        return null
+    }  
+} 
+
+
+async function getTables(dataset_id){
+    var openIdToken = await getOpenIdToken()
+
+    const headers = {
+         'Authorization':'Bearer '+openIdToken.access_token
+    }
+    
+    const endpoint = 'https://api.powerbi.com/v1.0/myorg/'
+                    + 'datasets/'+ dataset_id
+                     +'/tables/'
+
+    const options = { method: 'GET', headers: headers || {}};
+    const response = await fetch(endpoint, options);
+    if (response.status == 200 ) {
+        console.log(' get tables succeeded')  
+        const json = await response.json(); 
+        return json.value
+    } else {
+        const text = await response.text() 
+        const statusText = await response.statusText() 
+        console.log(' get tables  failed' + text!=''?text:statusText ) 
         return null
     }  
 } 
