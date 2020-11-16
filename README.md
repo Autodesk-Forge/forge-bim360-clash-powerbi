@@ -5,6 +5,8 @@ This repository demonstrates the scenario: analyze clash data and clash issue by
 - [PowerBITool](./PowerBITool/README.md) is the tool for prepraring the relevant data of PowerBI report. 
 - [WebSample](./WebSample/README.md) is the source project of this sample. 
 
+ Note: This repo contains [large RVT sample files](./WebSample/Source Files) and uses [`git lfs`](https://git-lfs.github.com/), make sure you clone accordingly if you need these test files.
+
 # Thumbnail
 
 ![thumbnail](/thumbnail.png)

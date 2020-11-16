@@ -93,6 +93,8 @@ Clone this project or download it. It's recommended to install [GitHub desktop](
 
     git clone https://github.com/autodesk-forge/forge-bim360-clashissue-powerbi
 
+Note: This repo contains [large RVT sample files](./Source Files) and uses [`git lfs`](https://git-lfs.github.com/), make sure you clone accordingly if you need these test files.
+
 Open the project folder in **Visual Sutdio Code**. Install the required packages, set the enviroment variables with your client ID & secret and finally start it. Via command line, navigate to the folder where this repository was cloned, then `WebSample` subfolder, and use the following:
 
 Mac OSX/Linux (Terminal)
