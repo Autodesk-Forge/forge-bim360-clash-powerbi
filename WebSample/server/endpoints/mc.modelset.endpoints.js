@@ -20,6 +20,9 @@
 
 const express = require('express');
 const router = express.Router(); 
+
+const config = require('../config')
+
 const utility = require("../utility")
 const analyze = require('../analyze');
 

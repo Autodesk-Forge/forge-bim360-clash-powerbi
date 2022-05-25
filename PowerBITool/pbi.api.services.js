@@ -40,8 +40,10 @@ async function getOpenIdToken() {
         resource: config.pbi.resourceUrl,
         username: config.pbi.pbiUsername,
         password: config.pbi.pbiPassword,
-        grant_type: 'password',
-        client_secret:config.pbi.applicationSecret
+        grant_type: 'password'//,
+
+        //looks screte is not required anymore 
+       // client_secret:config.pbi.applicationSecret
     }
     var formBody = [];
     for (var property in body) {

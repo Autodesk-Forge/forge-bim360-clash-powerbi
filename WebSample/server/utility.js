@@ -29,15 +29,15 @@ const statusFolder = './Status/'
 
 
 module.exports = { 
-    clearFolder:clearFolder,
-    saveJsonObj:saveJsonObj,
-    downloadResources:downloadResources,
-    readLinesFile:readLinesFile,
-    randomValueBase64:randomValueBase64,
-    storeStatus:storeStatus,
-    readStatus:readStatus,
-    deleteStatus:deleteStatus,
-    compressStream:compressStream 
+    clearFolder,
+    saveJsonObj,
+    downloadResources,
+    readLinesFile,
+    randomValueBase64,
+    storeStatus,
+    readStatus,
+    deleteStatus,
+    compressStream 
 }
 
 async function clearFolder(folder){
@@ -69,14 +69,16 @@ async function saveJsonObj(path,filename,obj){
 }
  
 
+
+//download file from S3 
 async function downloadResources( 
     url,headers,
     path,filename) { 
-
+  
         const options = { method: 'GET', headers: headers }; 
         const res = await fetch(url,options); 
         const fileStream = fs.createWriteStream(path+filename); 
-
+  
         return new Promise((resolve, reject) => {
             res.body.pipe(fileStream);
                 res.body.on("error", (err) => {
@@ -86,7 +88,8 @@ async function downloadResources(
             resolve(filename);
             }); 
         }); 
-}  
+  }  
+  
 
 
 async function readLinesFile(csvFilePath){
@@ -145,3 +148,11 @@ function compressStream(inputJson){
     const inputStr = JSON.stringify(inputJson)
     return pako.deflate(inputStr)
  }
+
+ String.prototype.format = function () {
+    var args = arguments;
+    return this.replace(/\{(\d+)\}/g, function (m, i) {
+      return args[i];
+    });
+  };
+  

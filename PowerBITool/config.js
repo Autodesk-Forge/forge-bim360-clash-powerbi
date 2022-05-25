@@ -26,13 +26,16 @@ module.exports = {
     apiUrl : 'https://api.powerbi.com',
     embedUrlBase : 'https://app.powerbi.com', 
    
-    pbiUsername : process.env.POWERBI_USERNAME || '<your PowerBI account name>',
-    pbiPassword : process.env.POWERBI_PASSWORD || '<your PowerBI password>', 
-    applicationId : process.env.POWERBI_APP_ID || '<your PowerBI application id>',
-    applicationSecret : process.env.POWERBI_APP_SECRET || '<your PowerBI application secret>',
-    workspaceId : process.env.POWERBI_WORKSPACE_ID || '<your PowerBI workspace (group) id>', 
-    dataset_name:process.env.POWERBI_DATASET_NAME || '<your PowerBI dataset name>',
-    table_name:process.env.POWERBI_TABLE_NAME ||'<your PowerBI table name>'
+    pbiUsername : process.env.POWERBI_USERNAME || '',
+    pbiPassword : process.env.POWERBI_PASSWORD || '', 
+    applicationId : process.env.POWERBI_APP_ID || '',
+
+    //looks screte is not required anymore
+    //applicationSecret : process.env.POWERBI_APP_SECRET || '<your PowerBI application secret>',
+    
+    workspaceId : process.env.POWERBI_WORKSPACE_ID || '', 
+    dataset_name:process.env.POWERBI_DATASET_NAME || '',
+    table_name:process.env.POWERBI_TABLE_NAME ||''
  } 
  
 };

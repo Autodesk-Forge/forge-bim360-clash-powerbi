@@ -25,11 +25,11 @@ var fs = require("fs");
 const config = require('../config');
 
 module.exports = {
-    getPBIToken: getPBIToken,
-    getReportData:getReportData,
-    getDatasets:getDatasets,
-    deleteRows:deleteRows,
-    pushDataToDataset:pushDataToDataset
+    getPBIToken,
+    getReportData,
+    getDatasets,
+    deleteRows,
+    pushDataToDataset
 }
 
 async function getPBIToken() {
@@ -72,8 +72,8 @@ async function getOpenIdToken() {
         resource: config.pb.resourceUrl,
         username: config.pb.pbiUsername,
         password: config.pb.pbiPassword,
-        grant_type: 'password',
-        client_secret:config.pb.applicationSecret
+        grant_type: 'password'//,
+        //client_secret:config.pb.applicationSecret
 
     }
     var formBody = [];
@@ -147,8 +147,7 @@ async function deleteRows(datasetId,tableName){
     
     const endpoint = 'https://api.powerbi.com/v1.0/myorg/'
                     + 'datasets/'+ datasetId
-                     +'/tables/'+tableName +'/rows'
-
+                     +'/tables/'+tableName +'/rows' 
     const options = { method: 'DELETE', headers: headers || {}};
     const response = await fetch(endpoint, options);
     if (response.status == 200 ) {

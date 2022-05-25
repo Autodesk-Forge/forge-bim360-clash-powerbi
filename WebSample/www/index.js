@@ -177,7 +177,7 @@ function delegateModelsetSelectedEvent(){
       let r = await global_msSet.refreshOneModelset(mc_container_id,ms_id,ms_v_id)
       if(r)
         r = await global_clashMatrixView.produceClashMatrixView(mc_container_id,ms_id,ms_v_id)  
-      if(r)
+      if(r)        
         r=await global_clashRawView.refreshRawData(mc_container_id,ms_id,ms_v_id)
          
       $('#loader_stats').css({ display: "none" })

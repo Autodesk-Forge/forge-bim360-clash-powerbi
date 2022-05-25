@@ -23,10 +23,10 @@ const forgeSDK = require('forge-apis');
 const config = require('../config'); 
 
 module.exports = { 
-  getHubs:getHubs,
-  getUserProfile:getUserProfile,
-  getHQUsersList:getHQUsersList,
-  getHQCompanyList:getHQCompanyList
+  getHubs,
+  getUserProfile,
+  getHQUsersList,
+  getHQCompanyList
 } 
 
 async function getHubs(input){ 

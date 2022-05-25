@@ -11,7 +11,7 @@
 
 [![BIM 360 Model Set](https://img.shields.io/badge/BIM%20360%20Model%20Set-3.0.65-orange)](https://www.npmjs.com/package/forge-bim360-modelcoordination-modelset)
 [![BIM 360 Clash](https://img.shields.io/badge/BIM%20360%20Clash-3.3.27-orange)](https://www.npmjs.com/package/forge-bim360-modelcoordination-clash)
-[![BIM360 Index API](https://img.shields.io/badge/BIM%20360%20Index-1.2.44-orange)](https://www.npmjs.com/package/forge-bim360-modelcoordination-index)
+[![Model Properties API](https://img.shields.io/badge/Model%20PropertiesAPI-2.0-orange)]( https://forge.autodesk.com/en/docs/acc/v1/overview/field-guide/model-properties/) 
 
 [![PowerBI-Client](https://img.shields.io/badge/PowerBI--Client-v2.8.0-purple)](https://github.com/microsoft/PowerBI-JavaScript)
 [![PowerBI-API](https://img.shields.io/badge/PowerBI-v1.0-purple)](https://docs.microsoft.com/en-us/rest/api/power-bi/)
@@ -22,12 +22,11 @@
 
 ## Description
 
-This repository demonstrates the scenario: analyze clash data by BIM 360 Model Coordination API with [PowerBI](https://powerbi.microsoft.com/en-us/). 
+This repository demonstrates the scenario: analyze clash data by BIM 360 Model Coordination API with [PowerBI](https://powerbi.microsoft.com/en-us/). It is compatible with Model Coordination of Autodesk Construction Cloud (ACC).
 
 ## Thumbnail
 
   <p align="center"><img src="./help/main.png" width="1000"></p>   
-
 
 ## Live version
 
@@ -42,7 +41,7 @@ Watch [this video](https://youtu.be/pQaO2Dta97g) on how to play this demo.
 
 ### Demo 1: Matrix View of Clash
 
-To work with the sample, firstly upload some source models to BIM 360 folder, then create model set in Model Coordination module with this folder. Please refer to [BIM 360 Model Coordination documentation](http://help.autodesk.com/view/BIM360D/ENU/?guid=GUID-38CC3A1C-92FF-4682-847F-9CFAFCC4CCCE) for details. Check `Sample Files` folder for testing RVT files, it includes two versions of models set.
+To work with the sample, firstly upload some source models to BIM 360/ACC folder, then create model set in Model Coordination module with this folder. Please refer to [BIM 360 Model Coordination documentation](http://help.autodesk.com/view/BIM360D/ENU/?guid=GUID-38CC3A1C-92FF-4682-847F-9CFAFCC4CCCE) for details. Check `Sample Files` folder for testing RVT files, it includes two versions of models set.
 
 1. After the user logs in, select one project in the left panel tree.
 2. After modelset list is refreshed, select one modelset. *Note: the sample only works with the modelsets which are created after Oct 1st Because Model Coordination API updated and some logic of documents mapping are changed.*  
@@ -64,19 +63,9 @@ The count in the table indicates how many objects of the document (left column) 
 
 ## Technology Architecture
 
-1. The sample firstly downloads the model set data, clash data and index data of the selected project. 
-
- <p align="center"><img src="./help/workflow.png" width="600"></p>  
-
-The relationship of the data are demoed in the figure below:
-
- <p align="center"><img src="./help/relationship.png" width="800"></p>  
-
-Based on the relationship, the code analyzes the data to build the mapping among clash document, version URN and viewable guid etc. The mapping is saved to **docsMap.json**
-
- <p align="center"><img src="./help/docmap.png" width="400"></p>   
-
-2. When a cell of matrix view is selected, the corresponding two documents information will be sent to server. The method **clashedObjectsInTwoDocs** in [analyze.js](./server/analyze.js) will get out all clashes which occur between the two documents, and check the clash objects metadata, finally build records. These records will be pushed to PowerBI data, and refresh PowerBI report accordingly. Check [ReadMe of PowerBI tool](./PowerBITool/PowerBI.md) for more details.
+1. The sample firstly downloads the model set data, clash data. Based on the relationship, the code analyzes the data to build the mapping among clash document, version URN and viewable guid etc. The mapping is saved to **docsMap.json**
+ 
+2. When a cell of matrix view is selected, the corresponding two documents information will be sent to server. The method **clashedObjectsInTwoDocs** in [analyze.js](./server/analyze.js) will get out all clashes which occur between the two documents, query the properties of the two documents by Model Properties API and map with clash data, finally build records. These records will be pushed to PowerBI data, and refresh PowerBI report accordingly. Check [ReadMe of PowerBI tool](./PowerBITool/PowerBI.md) for more details.
 
 
 # Setup

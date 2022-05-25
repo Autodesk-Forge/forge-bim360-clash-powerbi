@@ -86,6 +86,10 @@ router.get('/oauth/callback', function (req, res) {
       console.log('get user server token succeeded!');
       userSession.setUserServerCredentials(userServerCredentials);
       userSession.setUserServerOAuth(req); 
+
+      //to access Model Properties API
+      config.credentials.token_3legged = userServerCredentials.access_token
+
  
       // then refresh and get a token for viewer
       // that we can send to the client
@@ -100,6 +104,9 @@ router.get('/oauth/callback', function (req, res) {
           console.log('get user client token succeeded!'); 
           userSession.setUserClientCredentials(userClientCredentials);
           userSession.setUserClientOAuth(req); 
+
+          
+
 
            res.redirect('/');
         })
