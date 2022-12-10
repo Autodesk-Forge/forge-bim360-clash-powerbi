@@ -12,7 +12,7 @@
     "csv-writer": "1.0.1",
     "es6-promise": "^4.2.5",
     "es6-promise-pool": "^2.5.0",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-session": "^1.15.6",
     "forge-apis": "0.4.1",
     "formidable": "^1.2.1",
