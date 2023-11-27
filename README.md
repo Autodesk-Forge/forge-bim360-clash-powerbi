@@ -1,3 +1,6 @@
+# DEPRECATED
+This repository has been deprecated and migrated to https://github.com/autodesk-platform-services/aps-model-clash-powerbi
+
 # BIM 360 Model Coordination: PowerBI report
 
 This repository demonstrates the scenario: analyze clash data and clash issue by BIM 360 Model Coordination API with [PowerBI](https://powerbi.microsoft.com/en-us/). It includes 2 modules:
